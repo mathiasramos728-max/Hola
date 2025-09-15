@@ -1,31 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>SALUDOS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Buenas tardes</title>
   <style>
     body {
+      margin: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: white;
+      justify-content: flex-start;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #222;
+      padding: 40px 20px;
+      box-sizing: border-box;
     }
     h1 {
-      font-size: 100px;
-      font-family: Arial, sans-serif;
+      font-size: clamp(28px, 6vw, 56px);
+      color: #6b4b2a;
+      margin: 0;
     }
-    img {
-      margin-top: 20px;
-      max-width: 400px;
-      height: auto;
+    .subtitle {
+      margin-top: 18px;
+      font-size: clamp(16px, 3.2vw, 22px);
+      text-align: center;
+    }
+    .spacer {
+      min-height: 40vh;
+    }
+    .btn {
+      background: #6b4b2a;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #8c6239;
+    }
+    .punchline {
+      margin-top: 28px;
+      font-size: clamp(18px, 3.5vw, 32px);
+      font-weight: 600;
+      color: #111;
+      display: none; /* oculto por defecto */
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>SALUDOS</h1>
-  <img src="https://i.imgur.com/QUIC9vC.jpeg" alt="Imagen debajo del texto">
+  <h1>Buenas tardes</h1>
+  <div class="subtitle">Hemos conseguido -</div>
+
+  <div class="spacer"></div>
+
+  <button class="btn" onclick="mostrarSorpresa()">Mostrar sorpresa</button>
+  <div id="punchline" class="punchline">
+    Su susto por la broma que se comió
+  </div>
+
+  <script>
+    function mostrarSorpresa() {
+      document.getElementById("punchline").style.display = "block";
+    }
+  </script>
 </body>
 </html>
