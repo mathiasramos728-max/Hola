@@ -5,149 +5,69 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Buenas tardes</title>
   <style>
-    :root{
-      --bg: #ffffff;
-      --text: #222;
-      --accent: #6b4b2a;
-    }
-    html,body{
-      height:100%;
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #222;
       font-family: Arial, sans-serif;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      box-sizing: border-box;
     }
-    .wrap{
-      min-height:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      padding:40px 20px;
-      box-sizing:border-box;
-    }
-    h1{
-      margin:0;
+    h1 {
       font-size: clamp(28px, 6vw, 56px);
-      color: var(--accent);
-      text-align:center;
+      color: #6b4b2a;
+      margin: 0;
     }
-    .subtitle{
-      margin-top:18px;
+    .subtitle {
+      margin-top: 18px;
       font-size: clamp(16px, 3.2vw, 22px);
-      text-align:center;
+      text-align: center;
     }
-    .spacer{
-      width:100%;
-      min-height:40vh;
-    }
-    .controls{
-      display:flex;
-      gap:14px;
-      margin-top: 10px;
-      flex-wrap:wrap;
-      justify-content:center;
+    .spacer {
+      min-height: 30vh;
     }
     .btn {
       background: #6b4b2a;
       color: #fff;
       border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 12px 24px;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.22s, transform 0.12s;
+      margin-top: 16px;
     }
-    .btn:active{ transform: translateY(1px); }
     .btn.secondary {
       background: #e6e6e6;
       color: #111;
     }
-    .punchline{
-      margin-top:28px;
+    .punchline {
+      margin-top: 28px;
       font-size: clamp(18px, 3.5vw, 32px);
-      font-weight:600;
-      color:#111;
-      text-align:center;
-      display:none;
+      font-weight: 600;
+      display: none;
+      text-align: center;
     }
-
-    /* pequeño aviso accesible (oculto visualmente) para lectores de pantalla */
-    .sr-only {
-      position: absolute !important;
-      height: 1px; width: 1px;
-      overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
-      white-space: nowrap;
+    .password-section {
+      margin-top: 24px;
+      text-align: center;
+      display: none; /* aparece después de la sorpresa */
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Buenas tardes</h1>
-    <div class="subtitle">Hemos conseguido -</div>
+  <h1>Buenas tardes</h1>
+  <div class="subtitle">Hemos conseguido -</div>
 
-    <div class="spacer" aria-hidden="true"></div>
+  <div class="spacer"></div>
 
-    <div class="controls">
-      <button class="btn" id="btnSorpresa">Mostrar sorpresa</button>
-      <!-- El segundo botón NO muestra texto en pantalla, sólo reproduce la voz -->
-      <button class="btn secondary" id="btnPass">Mostrar contraseña</button>
-    </div>
+  <button class="btn" id="btnSorpresa">Mostrar sorpresa</button>
 
-    <div id="punchline" class="punchline" aria-live="polite">
-      Su susto por la broma que se comió
-    </div>
-
-    <div class="sr-only" id="a11yStatus" aria-live="polite"></div>
+  <div id="punchline" class="punchline">
+    Su susto por la broma que se comió
   </div>
 
-  <script>
-    // Mostrar sorpresa normal
-    document.getElementById('btnSorpresa').addEventListener('click', function () {
-      const p = document.getElementById('punchline');
-      p.style.display = 'block';
-      // accesibilidad: anunciarlo a lectores de pantalla
-      document.getElementById('a11yStatus').textContent = 'Se mostró la sorpresa';
-    });
-
-    // Botón "Mostrar contraseña": no muestra nada visual, sí reproduce voz trolleada
-    document.getElementById('btnPass').addEventListener('click', function () {
-      // Mensaje de voz en español (trolleado y corto)
-      const text = 'Trolleado. No hay contraseña. Que lindo susto, ja ja.';
-      // Usar Web Speech API si está disponible
-      if ('speechSynthesis' in window) {
-        // Cancelar voces previas por si acaso
-        window.speechSynthesis.cancel();
-
-        const utter = new SpeechSynthesisUtterance(text);
-        // Preferencias: idioma y ritmo
-        utter.lang = 'es-ES'; // puedes cambiar a 'es-US' si prefieres
-        utter.rate = 1.0;
-        utter.pitch = 0.9;
-        // volumen 0.9 para que se oiga bien
-        utter.volume = 0.95;
-
-        // Intentar elegir una voz en español (si el navegador la provee)
-        const trySetVoice = () => {
-          const voices = window.speechSynthesis.getVoices();
-          // Buscar una voz que contenga 'es' en su código/lang
-          const v = voices.find(vo => vo.lang && vo.lang.startsWith('es'));
-          if (v) utter.voice = v;
-        };
-        trySetVoice();
-        // En algunos navegadores las voces llegan asíncronas
-        window.speechSynthesis.onvoiceschanged = trySetVoice;
-
-        // Reproducir (el clic es una interacción del usuario, por tanto debería permitir el sonido)
-        window.speechSynthesis.speak(utter);
-      } else {
-        // Si no hay speechSynthesis, no mostramos nada (cumplimos "no salga nada")
-        // opcional: puedes habilitar un fallback con alert, pero lo dejamos vacío a propósito
-      }
-      // No modificar la UI (no mostrar la "contraseña")
-    });
-  </script>
-</body>
-</html>
+  <div id="passwordSection" class="password-section">
+    <p>Bueno ahora sí la contraseña:</p>
