@@ -1,75 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Buenas tardes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pa que le presionas al enlace</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding: 40px 20px;
-      background: #fff;
-      color: #222;
-    }
-    h1 {
-      font-size: 42px;
-      color: #6b4b2a;
+      height: 100vh;
       margin: 0;
+      text-align: center;
     }
-    .subtitle { margin-top: 18px; font-size: 20px; text-align: center; }
-    .spacer { min-height: 30vh; }
-    .btn {
-      background: #6b4b2a; color: #fff; border: none;
-      padding: 12px 24px; border-radius: 8px;
-      font-size: 16px; cursor: pointer; margin-top: 16px;
+
+    h1 {
+      font-size: 3em;
+      font-weight: bold;
+      text-transform: uppercase;
     }
-    .btn.secondary { background: #e6e6e6; color: #111; }
-    .punchline, .password-section { display: none; margin-top: 20px; text-align: center; }
-    .punchline { font-size: 26px; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>Buenas tardes</h1>
-  <div class="subtitle">Hemos conseguido -</div>
-  <div class="spacer"></div>
-
-  <!-- Botón sorpresa -->
-  <button class="btn" id="btnSorpresa">Mostrar sorpresa</button>
-
-  <!-- Texto sorpresa oculto -->
-  <div id="punchline" class="punchline">
-    Su susto por la broma que se comió
-  </div>
-
-  <!-- Sección contraseña oculta -->
-  <div id="passwordSection" class="password-section">
-    <p>Bueno ahora sí la contraseña:</p>
-    <button class="btn secondary" id="btnPass">Mostrar contraseña</button>
-  </div>
-
-  <script>
-    // Mostrar sorpresa
-    document.getElementById('btnSorpresa').addEventListener('click', function () {
-      document.getElementById('punchline').style.display = 'block';
-      document.getElementById('passwordSection').style.display = 'block';
-    });
-
-    // Mostrar contraseña (voz troll)
-    document.getElementById('btnPass').addEventListener('click', function () {
-      const text = 'Trolleado. No hay contraseña.';
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'es-ES';
-        window.speechSynthesis.speak(utter);
-      } else {
-        alert("Trolleado, no hay contraseña 😆");
-      }
-    });
-  </script>
+  <h1>pa que le presionas al enlace</h1>
 </body>
 </html>
